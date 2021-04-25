@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+    </head>
+    <body>
+        <main role="main" class="container">
+            <div id="main_page">
+                <a class="btn btn-success" href="/">Главная</a>
+            </div>
+            {% block content %}
+            <div id="slidebar">
+                {% for i in books %}
+                    <p><a class="navbar-brand" href="book/{{ i }}">{{ i }}</a></p>
+                {% endfor %}
+            </div>
+            <div id="main_text">
+                <h1 align="center">Онлайн Библиотека</h1>
+                <p style="font-size: 30px">На данном сайте мы представляем
+                    Вам возможность искать книги в специальном поиске.
+                </p>
+                <h2 align="center">Инструкция</h2>
+                <p style="font-size: 30px">1. Зарегестрируйтесь на сайте</p>
+                <p style="font-size: 30px">2. Перейдите на страницу поиска при помощи кнопки "Поиск"</p>
+                <p style="font-size: 30px">3. Найдите нужную книгу</p>
+                <p style="font-size: 30px">Также при проблемах в работе сайта, нажав на кнопку "Vk",
+                    вы можете перейти в оффициальную группу проекта во Вконтакте,
+                    где запросить поддержку в случае ошибок сайта.
+                    Нажав на кнопку "Добавить книгу", Вы можете нужную вам книгу в меню закладок слева.</p>
+            </div>
+            {% endblock %}
+        </main>
+        <nav>
+            {% if current_user.is_authenticated %}
+                <div id="about_user">
+                    <h3>{{ current_user.name }} {{ current_user.surname }}</h3>
+                    <p><a class="navbar-brand" href="/logout">Выйти</a></p>
+                </div>
+                <div id="text">
+                    <div align="center">Здесь вы можете добавлять и скачивать книги</div>
+                    <div align="center">Для того чтобы выбрать книгу воспользуйтесь поиском
+                        <div>
+                            <a class="btn btn-primary " href="/search">Поиск</a>
+                            <a class="btn btn-success" href="https://vk.com/botzdorovie228">Группа Вк</a>
+                            <a class="btn btn-primary" href="/add_book">Добавить книгу</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div id="verifications">
+                    <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                    <a class="btn btn-success" href="/login">Войти</a>
+                </div>
+            {% endif %}
+        </nav>
+    </body>
+</html>

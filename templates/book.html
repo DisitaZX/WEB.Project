@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="register_form" method="post">
+    <h1 align="center">Добавление книги</h1>
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+    <p style="margin-bottom: 0;margin-left:30px">
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control", style="width:500px") }}<br>
+        {% for error in form.name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p style="margin-bottom: 0;margin-left:30px">
+        {{ form.author.label }}<br>
+        {{ form.author(class="form-control", style="width:500px") }}<br>
+        {% for error in form.author.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p style="margin-bottom: 0;margin-left:30px">
+        {{ form.language.label }}<br>
+        {{ form.language(class="form-control", style="width:500px") }}<br>
+        {% for error in form.language.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p style="margin-bottom: 0;margin-left:30px">
+        {{ form.pages.label }}<br>
+        {{ form.pages(class="form-control", style="width:500px") }}<br>
+        {% for error in form.pages.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p style="margin-bottom: 0;margin-left:30px">{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% endblock %} 

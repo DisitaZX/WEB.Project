@@ -1,0 +1,97 @@
+body {
+    background-color: #c7b39b;
+    background-image: url(images/index.jpg);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	font-weight: normal;
+	font-family: 'RobotoLight', Helvetica, Arial, sans-serif;
+}
+
+form.login_form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 450px;
+    background-color: #f5f5dc;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+form.register_form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 590px;
+    background-color: #f5f5dc;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#verifications {
+    position: fixed;
+    top: 10px;
+    left: 1600px;
+    bottom: 0; right: 0;
+}
+
+#main_page {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+#slidebar {
+    position: absolute;
+    width: 300px;
+    background: #f5f5dc;
+    border-right: 1px solid #231F20;
+    top: 200px;
+    bottom: 500px;
+    overflow: auto;
+    padding: 10px;
+    left: 10px
+}
+
+#main_text {
+    position: fixed;
+    top: 200px;
+    left: 625px;
+    width: 700px;
+    color: #40E0D0;
+}
+
+#text {
+    color: #40E0D0;
+    font-size: 30px;
+}
+
+#about_user {
+    position: fixed;
+    top: 10px;
+    left: 1600px;
+    height: 80px;
+    background: #f5f5dc;
+}
+
+#search {
+    position: absolute;
+    width: 1000px;
+    background: #ECF5E4;
+    border-right: 1px solid #231F20;
+    top: 230px;
+    bottom: 200px;
+    overflow: auto;
+    padding: 10px;
+    left: 450px
+}
+
+form.search_form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 590px;
+    background-color: #f5f5dc;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+}
