@@ -15,4 +15,3 @@ SQLAlchemy==1.4.11
 urllib3==1.26.4
 Werkzeug==1.0.1
 WTForms==2.3.3
-vk-api=11.9.1
