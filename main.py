@@ -8,6 +8,7 @@ from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_wtf import FlaskForm
 import requests
+import os
 
 
 app = Flask(__name__)
