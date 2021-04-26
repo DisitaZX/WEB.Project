@@ -6,6 +6,7 @@ from flask_login import UserMixin
 
 
 class User(SqlAlchemyBase, UserMixin):
+    """Класс внесения пользователя в БД"""
     __tablename__ = 'users'
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
@@ -21,8 +22,10 @@ class User(SqlAlchemyBase, UserMixin):
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                       default=datetime.datetime.now)
 
+    # Создание хэшированного пароля
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
 
+    # Проверка пароля
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)

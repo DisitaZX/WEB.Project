@@ -3,6 +3,7 @@ from .db_session import SqlAlchemyBase
 
 
 class Book(SqlAlchemyBase):
+    """Класс отвечающиц за внос книги в БД"""
     __tablename__ = 'books'
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)

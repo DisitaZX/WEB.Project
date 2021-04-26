@@ -8,7 +8,6 @@ from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_wtf import FlaskForm
 import requests
-import os
 
 
 app = Flask(__name__)
@@ -17,6 +16,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# Функция отвечающая за создание сессии по пользователю
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -24,6 +24,7 @@ def load_user(user_id):
 
 
 class LoginForm(FlaskForm):
+    """Класс отвечающий за логин пользователя"""
     email = EmailField('Почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
@@ -31,6 +32,7 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
+    """Класс отвечающий за регистрацию пользователя"""
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
@@ -44,6 +46,7 @@ class RegisterForm(FlaskForm):
 
 
 class BookForm(FlaskForm):
+    """Класс отвечающий за добавление книги в закладки"""
     name = StringField('Название книги', validators=[DataRequired()])
     author = StringField('Имя Автора', validators=[DataRequired()])
     language = StringField('Язык', validators=[DataRequired()])
@@ -52,10 +55,12 @@ class BookForm(FlaskForm):
 
 
 class Search(FlaskForm):
+    """Класс отвечающий за поиск"""
     text = StringField("Текст", validators=[DataRequired()])
     submit = SubmitField('Найти')
 
 
+# Функция отвечающая за базовую страницу
 @app.route('/')
 def index():
     session = db_session.create_session()
@@ -63,6 +68,7 @@ def index():
     return render_template('base.html', title="Библиотека", books=books)
 
 
+# Функция отвечающая за страницу с логином
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -78,6 +84,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+# Функция отвечающая за страницу с регистрацией
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -108,6 +115,7 @@ def register():
     return render_template('register.html', title='Регистрация', form=form)
 
 
+# Функция отвечающая за выход из аккаунта пользователя
 @app.route('/logout')
 @login_required
 def logout():
@@ -115,6 +123,7 @@ def logout():
     return redirect("/")
 
 
+# Функция отвечающая за добавление книги в закладки
 @app.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
@@ -137,6 +146,7 @@ def add_book():
     return render_template('book.html', title='Добавление книги', form=form)
 
 
+# Функция отвечающая за поиск книги по API
 @app.route('/search', methods=["POST", "GET"])
 @login_required
 def search():
@@ -153,6 +163,7 @@ def search():
     return render_template('search.html', names=names, form=form)
 
 
+# Функция отвечающая за переход на ссылку для скачивания или покупки
 @app.route('/book/<book>')
 @login_required
 def bookname(book):
@@ -171,5 +182,4 @@ def bookname(book):
 
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(port='8000', host='127.0.0.1')
