@@ -15,15 +15,21 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
+
+
 class LoginForm(FlaskForm):
     email = EmailField('Почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
+
+
 class RegisterForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
@@ -35,20 +41,28 @@ class RegisterForm(FlaskForm):
     speciality = StringField('Специальность', validators=[DataRequired()])
     address = StringField('Адрес', validators=[DataRequired()])
     submit = SubmitField('Отправить')
+
+
 class BookForm(FlaskForm):
     name = StringField('Название книги', validators=[DataRequired()])
     author = StringField('Имя Автора', validators=[DataRequired()])
     language = StringField('Язык', validators=[DataRequired()])
     pages = IntegerField('Количество страниц', validators=[DataRequired()])
     submit = SubmitField('Отправить')
+
+
 class Search(FlaskForm):
     text = StringField("Текст", validators=[DataRequired()])
     submit = SubmitField('Найти')
+
+
 @app.route('/')
 def index():
     session = db_session.create_session()
     books = [i.name for i in session.query(Book)]
     return render_template('base.html', title="Библиотека", books=books)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -62,6 +76,8 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -90,11 +106,15 @@ def register():
         session.commit()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect("/")
+
+
 @app.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
@@ -115,6 +135,8 @@ def add_book():
         session.commit()
         return redirect('/')
     return render_template('book.html', title='Добавление книги', form=form)
+
+
 @app.route('/search', methods=["POST", "GET"])
 @login_required
 def search():
@@ -129,6 +151,8 @@ def search():
             title = i["volumeInfo"]["title"]
             names.append(title)
     return render_template('search.html', names=names, form=form)
+
+
 @app.route('/book/<book>')
 @login_required
 def bookname(book):
@@ -143,6 +167,8 @@ def bookname(book):
         except KeyError:
             download = '/'
     return redirect(download)
+
+
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
     port = int(os.environ.get("PORT", 5000))
